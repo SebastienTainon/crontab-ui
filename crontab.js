@@ -69,7 +69,7 @@ exports.set_crontab = function(env_vars, callback){
 					if(tab.command[tab.command.length-1] != ";") // add semicolon
 						tab.command +=";";
 					//{ command; } 2>/tmp/<id>.log|| {if test -f /tmp/<id>; then date >> <log file>; cat /tmp/<id>.log >> <log file>; rm /tmp<id>.log }
-					crontab_string += tab.schedule + " { " + tab.command + " } 2> " + tmp_log +"; if test -f " + tmp_log +"; then date >> " + log_file + "; cat " + tmp_log + " >> " + log_file + "; rm " + tmp_log + "; fi \n";
+					crontab_string += tab.schedule + " { " + tab.command + " } > " + tmp_log + " 2>&1; if test -f " + tmp_log +"; then date >> " + log_file + "; cat " + tmp_log + " >> " + log_file + "; rm " + tmp_log + "; fi \n";
 				}
 				else {
 					crontab_string += tab.schedule + " " + tab.command + "\n";
